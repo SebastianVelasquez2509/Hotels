@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="hotels.css">
+    <script src="./hotels.js"></script>
+    <title>Book It!</title>
+</head>
+<body>
+    <header class="Header">
+        <h1 class="Title">Book it!</h1>
+        <div class="Filter__Container">
+                <form class="form" action="">
+                    <input class="Filter__DateFromFilter-Icon" name="date-from" id="date-from" min="NaN-NaN-NaN" max="" type="date" value="">
+                    <input class="Filter__DateToFilter-Icon" name="date-to" id="date-to" type="date" min="" value="">
+                    <select class="Filter__PricesFilter-Icon" name="filter-prices" id="filter-prices">
+                        <option value="all">All prices</option>
+                        <option value="price1">$</option>
+                        <option value="price2">$$</option>
+                        <option value="price3">$$$</option>
+                        <option value="price4">$$$$</option>
+                    </select>
+                    </select>
+                    <input class="input" type="reset" value="clear">
+                </form>
+        </div>
+        <div class="FoundMessage__Container">
+            <p class="FoundMessage__Title">We have found for you...</p>
+            <p class="FoundMessage__Content">All sizes hotels of all category prices,  in all countries.</p>
+        </div>
+    </header>
+    <main>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
