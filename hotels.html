@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="hotels.css">
-    <script src="./hotels.js"></script>
     <title>Book It!</title>
 </head>
 <body>
@@ -22,7 +21,7 @@
                         <option value="price4">$$$$</option>
                     </select>
                     </select>
-                    <input class="input" type="reset" value="clear">
+                    <input class="input" id="input" type="reset" value="clear">
                 </form>
         </div>
         <div class="FoundMessage__Container">
@@ -31,8 +30,10 @@
         </div>
     </header>
     <main>
+        <div id="container-tarjetas"></div>
     </main>
     <footer>
     </footer>
+    <script type="module" src="./hotels.js"></script>
 </body>
 </html>

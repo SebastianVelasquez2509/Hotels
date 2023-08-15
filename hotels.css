@@ -89,3 +89,51 @@
     background-position-x: 0.312rem;
     background-position-y: center;
 }
+body{
+    background-color: #fceedd54;
+}
+#container-tarjetas{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-left: 40px;
+    align-items: center;
+}
+.tarjeta{
+    margin-top: 40px;
+}
+img.imgHoteles {
+    max-width: 440px;
+    border-radius: 25px;
+}
+
+.name-hotel{
+    margin-top: 8px;
+    margin-left: 12px;
+}
+.div-1{
+    margin-left: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.div-2{
+    margin-left: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.boton{
+    margin-top: 6px;
+    margin-left: 12px;
+    border-radius: 15px;
+    border: 0px none;
+    padding: 8px 15px;
+    font-size: 12px;
+    background: #333333b4;
+    border-color: #fff;
+    color: #fff;
+}
+:hover.boton{
+    cursor: pointer;
+    background: #33333371;
+    color: black;
+}
