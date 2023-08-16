@@ -2,12 +2,12 @@ import { consultaHoteles } from "./export.js";
 const aparicion = await consultaHoteles();
 const data = await aparicion.json();
 console.log(data);
-
+let filteredData=data
 function precio(numero) {
     return "$".repeat(numero);
 }
 
-function isa(texto){
+function symbolToNumber(texto){
     return texto.split("$").length -1
 }
 const containerTarjetas = document.getElementById("container-tarjetas");
@@ -78,7 +78,7 @@ async function hoteles(data) {
     div2.appendChild(description2);
     });
 }
-hoteles(data);
+/*hoteles(data);
 const filtro = document.getElementById("filter-prices");
 filtro.addEventListener("change", () => {
     let valor = filtro.value;
@@ -102,4 +102,106 @@ clear.addEventListener("click",()=>{
     filtro.selectedIndex=0
     containerTarjetas.innerHTML=""
     hoteles(data)
+} )*/
+let shouldShowMessage = false;
+function applyFilters() {
+  let tempData = data;
+  // Apply price filter
+  const selectedPrice = filterPrices.value;
+  let priceSelect = filterPrices.options[filterPrices.selectedIndex];
+  const textPreiceSelected = priceSelect.textContent;
+  const changeToNumber = symbolToNumber(textPreiceSelected);
+  if (selectedPrice != "all") {
+    tempData = tempData.filter((hotel) => hotel.price == changeToNumber);
+  }
+  // Apply date filter
+  if (dateCheckOutSelected) {
+    const differenceInMilliseconds = calculateDifferenceDays();
+    tempData = tempData.filter((hotel) =>
+      isHotelAvailable(hotel, differenceInMilliseconds)
+    );
+  }
+  filteredData = tempData;
+  shouldShowMessage = filteredData.length > 0;
+  const messageContainer = document.getElementById("message-container");
+  if (filteredData.length == 0) {
+    messageContainer.textContent = "Sorry we don't have hotels available";
+  }
+}
+
+hoteles(data);
+
+// FILTER PRICES
+const filterPrices = document.getElementById("filter-prices");
+filterPrices.addEventListener("change", () => {
+  applyFilters();
+  containerTarjetas.innerHTML=""
+  hoteles(filteredData);
+});
+// FILTER DATE
+const dateCheckIn = document.getElementById("checkIn");
+const dateCheckOut = document.getElementById("checkOut");
+const today = new Date();
+function zerodate(dateZero) {
+  const converText = "" + dateZero;
+  if (converText.length === 1) {
+    return "0" + dateZero;
+  } else {
+    return dateZero;
+  }
+}
+const day = today.getDate();
+const month = today.getMonth() + 1;
+const year = today.getFullYear();
+const dateCheckInHotels = year + "-" + zerodate(month) + "-" + zerodate(day);
+const dateCheckOutHotels =
+  year + "-" + zerodate(month) + "-" + zerodate(day + 1);
+dateCheckIn.setAttribute("min", dateCheckInHotels);
+dateCheckOut.setAttribute("min", dateCheckOutHotels);
+dateCheckIn.addEventListener("change", () => {
+  const parts = dateCheckIn.value.split("-");
+  const year = parseInt(parts[0]);
+  const month = parseInt(parts[1]);
+  const day = parseInt(parts[2]);
+  const finalDate = year + "-" + zerodate(month) + "-" + zerodate(day + 1);
+  dateCheckOut.setAttribute("min", finalDate);
+  dateCheckOutSelected = false;
+  applyFilters();
+  containerTarjetas.innerHTML=""
+  hoteles(filteredData);
+});
+function isHotelAvailable(hotel, differenceInMilliseconds) {
+  const availabilityFrom = hotel.availabilityFrom;
+  const availabilityTo = hotel.availabilityTo;
+  const availabilityDifference = availabilityTo - availabilityFrom;
+  return availabilityDifference >= differenceInMilliseconds;
+}
+let dateCheckOutSelected = false;
+function calculateDifferenceDays() {
+  const currentDateIni = new Date();
+  currentDateIni.setHours(0, 0, 0, 0);
+  const optionCheckInIni = new Date(dateCheckIn.value + " 00:00:00");
+  optionCheckInIni.setHours(0, 0, 0, 0);
+  const optionCheckIn = optionCheckInIni.getTime();
+  if (dateCheckOut.value == "") {
+    return;
+  }
+  const optionCheckOut = new Date(dateCheckOut.value);
+  const millisecondsDate = optionCheckOut - optionCheckIn;
+  const millisecondsInADay = 24 * 60 * 60 * 1000; // 86,400,000
+  return Math.round(millisecondsDate / millisecondsInADay) * millisecondsInADay;
+}
+dateCheckIn.value = "";
+dateCheckOut.value = "";
+dateCheckOut.addEventListener("change", () => {
+  dateCheckOutSelected = true;
+  applyFilters();
+  containerTarjetas.innerHTML=""
+  hoteles(filteredData);
+});
+const clear=document.getElementById("input")
+clear.addEventListener("click",()=>{
+    containerTarjetas.innerHTML=""
+    hoteles(data)
 } )
+
