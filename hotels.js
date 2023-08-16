@@ -57,7 +57,7 @@ async function hoteles(data) {
     divCont.appendChild(div2);
 
     const imgHoteles2 = document.createElement("img");
-    imgHoteles2.setAttribute("src", `./recursos/${hotels.country}-flag.png`);
+    imgHoteles2.setAttribute("src", `./recursos/${hotels.country}-flags.png`);
     imgHoteles2.setAttribute("alt", hotels.country);
     imgHoteles2.className = "imgHoteles";
     div1.appendChild(imgHoteles2);
